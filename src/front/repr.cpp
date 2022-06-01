@@ -14,6 +14,10 @@ ProgramRepr ProgramRepr::from_token_table(const TokenTable &table) {
   return res;
 }
 
+ProgramRepr::instr_sequence_type const &ProgramRepr::get_instructions() const {
+  return _instr_sequence;
+}
+
 namespace detail {
 
 ProgramRepr::instr_sequence_type gather_tokens(const TokenTable &table) {
@@ -75,9 +79,11 @@ ProgramRepr::instr_sequence_type gather_tokens(const TokenTable &table) {
       res.emplace_back(make_label(raw_table, i));
       break;
     default:
-      throw std::runtime_error("Erreur. :(");
+      throw std::runtime_error("Token inconnu.");
     }
   }
+
+  return res;
 }
 
 } // namespace detail

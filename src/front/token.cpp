@@ -37,8 +37,8 @@ extract_words_from_text_source(const TextSource &text_source) {
     if (is_white_character(c) and not word.empty()) {
       word = std::move(left_trim(word));
       res.emplace_back(word, tokenize_word(word));
-      word = "";
-    } else
+      word.clear();
+    } else if (not is_white_character(c))
       word.push_back(c);
   }
 
@@ -93,15 +93,15 @@ TokenKind parse_instruction(std::string word) {
 }
 
 TokenKind tokenize_word(std::string word) {
-  auto int_lit = std::regex("^[+-]?[1-9]*|0$");
+  auto int_lit = std::regex("^[1-9][0-9]*|0$");
   auto reg = std::regex("^r[0-9]$");
   auto label = std::regex("^[a-zA-Z_$][a-zA-Z_$0-9]*$");
 
   if (is_instruction(word))
     return parse_instruction(word);
-  if (std::regex_match(std::move(word), int_lit))
+  if (std::regex_match(std::move(word), int_lit)) {
     return TokenKind::INT_LIT;
-  else if (std::regex_match(std::move(word), reg))
+  } else if (std::regex_match(std::move(word), reg))
     return TokenKind::REGISTER;
   else if (std::regex_match(std::move(word), label))
     return TokenKind::LABEL;

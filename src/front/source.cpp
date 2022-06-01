@@ -20,7 +20,7 @@ std::string convert_source_to_text(std::ifstream &file_handler) {
   auto line = std::string{};
 
   while (std::getline(file_handler, line))
-    res.append(line);
+    res.append(line + " ");
 
   return res;
 }
