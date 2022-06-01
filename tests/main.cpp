@@ -8,6 +8,6 @@ int main() {
   auto source = TextSource::from_file("/home/daimyo/dev/cmp/res/program.asm");
   auto tokens = TokenTable::from_text_source(source);
 
-  for (auto const &tok : tokens.get_table())
-    std::cout << '"' << tok << '"' << '\n';
+  for (auto const &[a, b] : tokens.get_table())
+    std::cout << a << ": " << static_cast<int>(b) << '\n';
 }

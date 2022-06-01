@@ -1,4 +1,4 @@
 main
-  ld r0  5
+  ld r0 5
   out r0
   
